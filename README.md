@@ -33,7 +33,7 @@ to identify companies with **high downside risk**.
 
 ## 🧰 Tech stack
 
-Python (pandas, numpy, scikit-learn, xgboost, shap), Jupyter Notebooks, possibly Streamlit for a simple dashboard.
+Python (pandas, numpy, scikit-learn, xgboost, shap), Spyder, possibly Streamlit for a simple dashboard.
 
 ## 🚀 Next steps
 
