@@ -1,0 +1,85 @@
+1. Setup & Data Loading
+Python
+
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+from scipy import stats
+
+# Caricamento del dataset (usa il tuo percorso assoluto se necessario)
+path = r"C:\Users\utente\Desktop\Progetti_Finanza_Distinzione\Piano_Carriera_2030\Dataset\features_with_target.csv"
+df = pd.read_csv(path)
+
+# Impostazioni grafiche professionali
+plt.style.use('ggplot')
+sns.set_palette("viridis")
+2. Summary Statistics & Target Check
+In questa sezione analizziamo la "salute" del dato.
+
+Python
+
+print("--- Dataset Info ---")
+print(df.info())
+
+print("\n--- Descriptive Statistics ---")
+display(df.describe())
+
+# Check Target Distribution
+plt.figure(figsize=(6, 4))
+sns.countplot(x='target_risk_12m', data=df)
+plt.title("Distribution of High Risk vs Low Risk Companies")
+plt.xlabel("Risk Flag (1 = High Risk)")
+plt.show()
+3. Correlation Matrix (The "Risk Map")
+Questa è la parte preferita dai recruiter. Mostra come l'ESG "si muove" insieme ai fondamentali finanziari.
+
+Python
+
+plt.figure(figsize=(12, 10))
+# Calcoliamo la correlazione escludendo la colonna 'company'
+corr = df.drop(columns=['company']).corr()
+
+# Creiamo una maschera per vedere solo la parte inferiore della matrice (più pulita)
+mask = np.triu(np.ones_like(corr, dtype=bool))
+
+sns.heatmap(corr, mask=mask, annot=True, fmt=".2f", cmap='RdYlGn', center=0)
+plt.title("Correlation Matrix: ESG and Financial Features vs Target")
+plt.show()
+Note for LinkedIn: Osserva come il G_score (Governance) ha spesso la correlazione negativa più forte con il rischio. Significa che una buona governance riduce drasticamente la probabilità di default.
+
+4. Feature Distribution by Risk Group
+Usiamo i boxplot per vedere "visivamente" la separazione tra i gruppi.
+
+Python
+
+features_to_plot = ['ebitda_margin', 'debt_to_ebitda', 'ESG_score', 'G_score']
+
+fig, axes = plt.subplots(2, 2, figsize=(16, 12))
+axes = axes.flatten()
+
+for i, col in enumerate(features_to_plot):
+    sns.boxplot(x='target_risk_12m', y=col, data=df, ax=axes[i])
+    axes[i].set_title(f'{col} Distribution by Risk Level')
+
+plt.tight_layout()
+plt.show()
+5. Statistical Significance (The "Quant" Touch)
+Non limitarti a dire "sembra diverso". Dimostralo con un T-Test.
+
+Python
+
+# Verifichiamo se la differenza di ESG Score tra i due gruppi è statisticamente significativa
+high_risk = df[df['target_risk_12m'] == 1]['ESG_score']
+low_risk = df[df['target_risk_12m'] == 0]['ESG_score']
+
+t_stat, p_val = stats.ttest_ind(high_risk, low_risk)
+
+print(f"--- Statistical Analysis for ESG Score ---")
+print(f"T-statistic: {t_stat:.4f}")
+print(f"P-value: {p_val:.4e}")
+
+if p_val < 0.05:
+    print("Result: SIGNIFICANT. ESG scores are meaningfully different between risk groups.")
+else:
+    print("Result: NOT SIGNIFICANT.")
