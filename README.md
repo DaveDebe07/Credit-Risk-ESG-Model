@@ -40,8 +40,8 @@ Key Insights:
 - Infrastructure: Homebrew, Virtual Environments (venv)
 
 🗺 Project Roadmap
-[x] Phase 0: Build a robust, correlated synthetic dataset (src/generate_dataset.py).
-[x] Phase 1: Perform rigorous Exploratory Data Analysis and statistical testing (notebooks/01_eda.ipynb).
-[x] Phase 2: Train Econometric (Logit) and Machine Learning (XGBoost) models (src/modeling.py).
-[ ] Phase 3: Implement SHAP values for model explainability (interpreting granular risk drivers).
-[ ] Phase 4: Publish a Final Risk Report and Interactive Dashboard.
+- [x] Phase 0: Build a robust, correlated synthetic dataset (src/generate_dataset.py).
+- [x] Phase 1: Perform rigorous Exploratory Data Analysis and statistical testing (notebooks/01_eda.ipynb).
+- [x] Phase 2: Train Econometric (Logit) and Machine Learning (XGBoost) models (src/modeling.py).
+- [ ] Phase 3: Implement SHAP values for model explainability (interpreting granular risk drivers).
+- [ ] Phase 4: Publish a Final Risk Report and Interactive Dashboard.
